@@ -1,0 +1,10 @@
+<h1>Press Releases</h1>
+<ul>
+  <% @pressReleases.each do |pressRelease| %>
+    <li>
+     <%= link_to pressRelease.title, pressRelease %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Press Release", new_press_release_path %>
