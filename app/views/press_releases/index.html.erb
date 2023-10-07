@@ -7,4 +7,6 @@
   <% end %>
 </ul>
 
-<%= link_to "New Press Release", new_press_release_path %>
+<% if current_user.role == "organization_admin" %>
+  <%= link_to "New Press Release", new_press_release_path %>
+<% end %>

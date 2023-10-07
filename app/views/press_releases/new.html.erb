@@ -4,15 +4,23 @@
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
-     <% @pressRelease.errors.full_messages_for(:title).each do |message| %>
+    <% @pressRelease.errors.full_messages_for(:title).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
 
-   <div>
-    <%= form.label :organization_name %><br>
-    <%= form.text_field :organization_name %>
-     <% @pressRelease.errors.full_messages_for(:content).each do |message| %>
+  <div>
+    <%= form.label :organization %><br>
+    <tbody>
+      <% @organizations.each do |org| %>
+        <tr>
+          <th>
+            <%= form.radio_button :organization_id, org.id %>
+            <%= org.name %></th>
+        </tr>
+      <% end %>
+    </tbody>
+    <% @pressRelease.errors.full_messages_for(:organization_id).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -20,7 +28,7 @@
   <div>
     <%= form.label :content %><br>
     <%= form.text_area :content %>
-     <% @pressRelease.errors.full_messages_for(:content).each do |message| %>
+    <% @pressRelease.errors.full_messages_for(:content).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>

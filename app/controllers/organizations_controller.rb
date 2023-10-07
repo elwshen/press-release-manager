@@ -3,7 +3,11 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations or /organizations.json
   def index
-    @organizations = Organization.all
+    if current_user.role == "publisher_admin"
+      @organizations = Organization.all
+    else
+      @organizations = Organization.where(user_id: current_user.id)
+    end
   end
 
   # GET /organizations/1 or /organizations/1.json
@@ -21,7 +25,7 @@ class OrganizationsController < ApplicationController
 
   # POST /organizations or /organizations.json
   def create
-    @organization = Organization.new(organization_params)
+    @organization = Organization.new(organization_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @organization.save

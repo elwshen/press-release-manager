@@ -1,10 +1,21 @@
-<% if user_signed_in? %> 
- <div> Welcome <%= current_user.email %> </div> 
-  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+<% if user_signed_in? %>
+  <div>
+    Welcome
+    <%= current_user.email %>
+  </div>
+  <% if current_user.role == "organization_admin" %>
+    <div>
+      <%= link_to "See my organizations", organizations_path %>
+      <%= link_to "See my press releases", press_releases_path %>
+    </div>
+  <% elsif current_user.role == "publisher_admin" %>
+    <div>
+      <%= link_to "See my publishers", publishers_path %>
+      <%= link_to "See all press releases", press_releases_path %>
+    </div>
+  <% end %>
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
 <% else %>
-  <%= button_to "Sign in", new_user_session_path %> 
+  <%= button_to "Sign in", new_user_session_path %>
 <% end %>
-<h1>Welcome!</h1>
-<%= link_to "Publishers", publishers_path %>
-<%= link_to "Organizations", organizations_path %>
-<%= link_to "Press Releases", press_releases_path %>
+

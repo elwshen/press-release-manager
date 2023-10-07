@@ -1,6 +1,11 @@
 class PressReleasesController < ApplicationController
   def index
-    @pressReleases = PressRelease.all
+    if current_user.role == "publisher_admin"
+      @pressReleases = PressRelease.all
+    else
+      @organizations = Organization.where(user_id: current_user.id)
+      @pressReleases = PressRelease.where(organization_id: (@organizations).map{|org| org.id})
+    end
   end
 
   def show
@@ -9,11 +14,11 @@ class PressReleasesController < ApplicationController
 
   def new
     @pressRelease = PressRelease.new
+    @organizations = Organization.where(user_id: current_user.id)
   end
 
   def create
-    @organization = Organization.where(name: press_release_params["organization_name"]).take
-    @pressRelease = PressRelease.new({organization_id: @organization.id, title: press_release_params["title"], content: press_release_params["content"], publish_date: DateTime.now})
+    @pressRelease = PressRelease.new(press_release_params.merge(publish_date: DateTime.now))
     if @pressRelease.save
       redirect_to @pressRelease
     else
@@ -23,6 +28,6 @@ class PressReleasesController < ApplicationController
 
   private
   def press_release_params
-    params.require(:press_release).permit(:title, :content, :publish_date, :organization_name)
+    params.require(:press_release).permit(:title, :content, :publish_date, :organization_id)
   end
 end
