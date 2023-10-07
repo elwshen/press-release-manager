@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :users
+  resources :press_releases
   resources :organizations
   resources :publishers
-  resources :users
-  root "press_releases#index"
-
-  resources :press_releases
+  root to: "home#index" 
 end

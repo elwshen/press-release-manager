@@ -10,20 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_28_195010) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_07_141219) do
   create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_organizations_on_user_id"
   end
 
   create_table "press_releases", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.datetime "publish_date"
+    t.integer "organization_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_press_releases_on_organization_id"
   end
 
   create_table "publishers", force: :cascade do |t|
@@ -31,17 +35,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_195010) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_publishers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "password"
-    t.integer "role"
-    t.string "entity_type", null: false
-    t.integer "entity_id", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["entity_type", "entity_id"], name: "index_users_on_entity"
+    t.integer "role", default: 0
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "organizations", "users"
+  add_foreign_key "press_releases", "organizations"
+  add_foreign_key "publishers", "users"
 end

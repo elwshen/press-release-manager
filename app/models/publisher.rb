@@ -1,3 +1,3 @@
 class Publisher < ApplicationRecord
-    has_many :users, :as => :entity
+    belongs_to :user
 end

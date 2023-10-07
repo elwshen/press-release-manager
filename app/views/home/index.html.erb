@@ -1,0 +1,10 @@
+<% if user_signed_in? %> 
+ <div> Welcome <%= current_user.email %> </div> 
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+<% else %>
+  <%= button_to "Sign in", new_user_session_path %> 
+<% end %>
+<h1>Welcome!</h1>
+<%= link_to "Publishers", publishers_path %>
+<%= link_to "Organizations", organizations_path %>
+<%= link_to "Press Releases", press_releases_path %>

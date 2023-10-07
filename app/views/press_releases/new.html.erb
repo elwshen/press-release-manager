@@ -9,6 +9,14 @@
     <% end %>
   </div>
 
+   <div>
+    <%= form.label :organization_name %><br>
+    <%= form.text_field :organization_name %>
+     <% @pressRelease.errors.full_messages_for(:content).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
   <div>
     <%= form.label :content %><br>
     <%= form.text_area :content %>
