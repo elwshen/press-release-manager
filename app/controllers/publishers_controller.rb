@@ -3,7 +3,11 @@ class PublishersController < ApplicationController
 
   # GET /publishers or /publishers.json
   def index
-    @publishers = Publisher.all
+    if !user_signed_in? 
+      redirect_to :root
+    else
+      @publishers = Publisher.all
+    end
   end
 
   # GET /publishers/1 or /publishers/1.json

@@ -1,6 +1,8 @@
 class PressReleasesController < ApplicationController
   def index
-    if current_user.role == "publisher_admin"
+    if !user_signed_in? 
+      redirect_to :root
+    elsif current_user.role == "publisher_admin"
       @pressReleases = PressRelease.all
     else
       @organizations = Organization.where(user_id: current_user.id)

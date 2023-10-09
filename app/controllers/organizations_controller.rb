@@ -3,7 +3,9 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations or /organizations.json
   def index
-    if current_user.role == "publisher_admin"
+    if !user_signed_in? 
+      redirect_to :root
+    elsif current_user.role == "publisher_admin"
       @organizations = Organization.all
     else
       @organizations = Organization.where(user_id: current_user.id)

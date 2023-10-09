@@ -46,8 +46,6 @@ gem "bootsnap", require: false
 
 gem "devise" 
 
-gem 'turbo-rails'
-
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -55,6 +53,7 @@ gem 'turbo-rails'
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
+  gem 'rspec-rails', '~> 6.0.0'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
